@@ -4,19 +4,14 @@
 #include <QTest>
 #include <QTimer>
 
-#include <src/tests/kadditional_test.h>
-#include <src/tests/kflexiblemodel_test.h>
-#include <src/tests/kmath_test.h>
-#include <src/tests/kpull_test.h>
-#include <src/tests/kuniversalqueue_test.h>
+#include "kadditional_test.h"
+#include "kflexiblemodel_test.h"
+#include "kmath_test.h"
+#include "kpull_test.h"
+#include "kuniversalqueue_test.h"
 #include <src/utility/kmemorydiagnosticservice.h>
 #include <iostream>
 
-
-
-
-
-#ifndef KLIBCORE_USE_LIBRARY
 
 int main(int argc, char *argv[]) {
 
@@ -41,4 +36,3 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 }
-#endif

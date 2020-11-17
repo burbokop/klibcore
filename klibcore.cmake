@@ -1,27 +1,10 @@
-
-
-
 cmake_minimum_required(VERSION 3.5)
-
-
-project(klibcore DESCRIPTION "klibcore")
-
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-if(CMAKE_VERSION VERSION_LESS "3.7.0")
-    set(CMAKE_INCLUDE_CURRENT_DIR ON)
-endif()
-
-
-
-
-
+include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 set(SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/audio/kamplitudetransformer.cpp
@@ -103,15 +86,6 @@ set(SOURCES
     ${CMAKE_CURRENT_LIST_DIR}/src/kadditional.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/kclassregistry.cpp
     ${CMAKE_CURRENT_LIST_DIR}/src/klibinfo.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/klibmain.cpp
-
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kadditional_test.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kaudio_test.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kflexiblemodel_test.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kgraphics_test.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kpull_test.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kmath_test.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kuniversalqueue_test.cpp
     )
 
 set(HEADERS
@@ -194,17 +168,7 @@ set(HEADERS
     ${CMAKE_CURRENT_LIST_DIR}/src/kclassregistry.h
     ${CMAKE_CURRENT_LIST_DIR}/src/klibinfo.h
 
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kuniversalqueue_test.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kadditional_test.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kaudio_test.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kflexiblemodel_test.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kgraphics_test.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kpull_test.h
-    ${CMAKE_CURRENT_LIST_DIR}/src/tests/kmath_test.h
     )
-
-
-
 
 
 add_library(klibcore SHARED
@@ -213,12 +177,6 @@ add_library(klibcore SHARED
     )
 
 add_compile_definitions(KLIBCORE_USE_LIBRARY)
-
-
-target_include_directories(klibcore PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
-
-
-message("[find_packs:]")
 
 find_package(Qt5 COMPONENTS
     Core
@@ -230,9 +188,6 @@ find_package(Qt5 COMPONENTS
     REQUIRED
     )
 
-
-message("[link:]")
-
 target_link_libraries(klibcore
     Qt5::Quick
     Qt5::Multimedia
@@ -241,3 +196,50 @@ target_link_libraries(klibcore
     Qt5::Qml
     )
 
+
+#Tests
+
+enable_testing()
+
+add_executable(klibcore_test
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kuniversalqueue_test.h
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kadditional_test.h
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kaudio_test.h
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kflexiblemodel_test.h
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kgraphics_test.h
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kpull_test.h
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kmath_test.h
+
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kadditional_test.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kaudio_test.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kflexiblemodel_test.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kgraphics_test.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kpull_test.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kmath_test.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tests/kuniversalqueue_test.cpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/tests/main.cpp
+    )
+
+target_link_libraries(klibcore_test
+    Qt5::Quick
+    Qt5::Multimedia
+    Qt5::Widgets
+    Qt5::Test
+    Qt5::Qml
+    klibcore
+    )
+
+
+add_test(NAME KLibCoreTest COMMAND klibcore_test)
+
+
+execute_process(
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMAND mkdir -p klibcore_doc
+)
+
+execute_process(
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/klibcore_doc
+    COMMAND ${CMAKE_CURRENT_LIST_DIR}/gendoc.sh
+)
