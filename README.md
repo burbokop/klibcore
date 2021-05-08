@@ -21,6 +21,11 @@ include(klibcore/klibcore.pro)
 DEFINES += KLIBCORE_USE_LIBRARY
 ```
 
+## in CMakteLists.txt file
+```
+include(klibcore/klibcore.cmake)
+```
+
 # additional defines
 
 klib allow using extended meta system.
