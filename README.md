@@ -11,7 +11,7 @@ git submodule update --remote
 # including KLibCore to your project
 
 ```
-git submodule add git@gitlab.bacul14.kl.ua:burbokop/klibcore.git
+git submodule add git@github.com:burbokop/klibcore.git
 ```
 
 ## in .pro file
