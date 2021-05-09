@@ -43,3 +43,7 @@ for this you need add some text to .pro file:
 ```
 DEFINES += KLIBCORE_USE_EXTENDED_META_SYSTEM
 ```
+or to cmake
+```
+add_definitions(-DKLIBCORE_USE_EXTENDED_META_SYSTEM)
+```
