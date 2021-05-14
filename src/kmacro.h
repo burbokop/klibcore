@@ -412,8 +412,8 @@ private: \
     KAutoPropertySaver<TYPE> m_ ## NAME ## Saver = KAutoPropertySaver<TYPE>(&m_ ## NAME, [this](auto value){ SETTER(value); }, QString(typeid(this).name()) + ":" + #NAME);
 
 inline QObject *kNewInstance(const QByteArray &className, QObject *parent=0) {
-    const QByteArray className2 = className + "*";
-    const int type = QMetaType::type( className2 );
+    const QByteArray classPtrName = className + "*";
+    const int type = QMetaType::type(classPtrName);
     if(type == QMetaType::UnknownType)
         return 0;
 
@@ -425,6 +425,9 @@ inline QObject *kNewInstance(const QByteArray &className, QObject *parent=0) {
     return objectPtr;
 }
 
+inline QObject *kNewInstance(const QString &className, QObject *parent=0) {
+    return kNewInstance(className.toLocal8Bit(), parent);
+}
 
 template<typename PtrT>
 uint8_t kCrc(PtrT *container, size_t size = 0) {
