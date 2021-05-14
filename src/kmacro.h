@@ -411,7 +411,19 @@ private: \
     TYPE m_ ## NAME = DEFAULT; \
     KAutoPropertySaver<TYPE> m_ ## NAME ## Saver = KAutoPropertySaver<TYPE>(&m_ ## NAME, [this](auto value){ SETTER(value); }, QString(typeid(this).name()) + ":" + #NAME);
 
+inline QObject *kNewInstance(const QByteArray &className, QObject *parent=0) {
+    const QByteArray className2 = className + "*";
+    const int type = QMetaType::type( className2 );
+    if(type == QMetaType::UnknownType)
+        return 0;
 
+    const QMetaObject *mo = QMetaType::metaObjectForType(type);
+    if(!mo)
+        return nullptr;
+
+    QObject *objectPtr = mo->newInstance(Q_ARG(QObject*, parent));
+    return objectPtr;
+}
 
 
 template<typename PtrT>
