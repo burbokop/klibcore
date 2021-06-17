@@ -164,6 +164,24 @@ public:
      * @return intterger extracted from string
      */
     static int extractInt(const QString &str, bool *ok = nullptr);
+
+    template<typename Container>
+    static QVector<Container> grouped(const Container& container, size_t countInGroup) {
+        size_t index = 0;
+        size_t currentCount = 0;
+        QVector<Container> result;
+        for(const auto& item : container) {
+            if(index >= result.size()) {
+                result.resize(index + 1);
+            }
+            result[index].push_back(item);
+            if(++currentCount >= countInGroup) {
+                currentCount = 0;
+                ++index;
+            }
+        }
+        return result;
+    }
 };
 
 
