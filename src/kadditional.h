@@ -3,6 +3,7 @@
 
 #include <src/kmacro.h>
 #include <QString>
+#include <QtMath>
 
 /**
  * @brief The KAdditional class provides pure functions for many different actions.
@@ -166,7 +167,7 @@ public:
     static int extractInt(const QString &str, bool *ok = nullptr);
 
     template<typename Container>
-    static QVector<Container> grouped(const Container& container, size_t countInGroup) {
+    static QVector<Container> groupedBy(const Container& container, size_t countInGroup) {
         size_t index = 0;
         size_t currentCount = 0;
         QVector<Container> result;
@@ -178,6 +179,25 @@ public:
             if(++currentCount >= countInGroup) {
                 currentCount = 0;
                 ++index;
+            }
+        }
+        return result;
+    }
+
+    template<typename Container>
+    static QVector<Container> groupedOn(const Container& container, size_t countOfGroups) {
+        if(countOfGroups == 0)
+            return {};
+
+        size_t index = 0;
+        QVector<Container> result;
+        for(const auto& item : container) {
+            if(index >= result.size()) {
+                result.resize(index + 1);
+            }
+            result[index].push_back(item);
+            if(++index >= countOfGroups) {
+                index = 0;
             }
         }
         return result;

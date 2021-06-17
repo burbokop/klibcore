@@ -201,7 +201,7 @@ target_link_libraries(klibcore
 
 enable_testing()
 
-add_executable(klibcore_test
+add_executable(klibcore_tests
     ${CMAKE_CURRENT_LIST_DIR}/tests/kuniversalqueue_test.h
     ${CMAKE_CURRENT_LIST_DIR}/tests/kadditional_test.h
     ${CMAKE_CURRENT_LIST_DIR}/tests/kaudio_test.h
@@ -221,7 +221,7 @@ add_executable(klibcore_test
     ${CMAKE_CURRENT_LIST_DIR}/tests/main.cpp
     )
 
-target_link_libraries(klibcore_test
+target_link_libraries(klibcore_tests
     Qt5::Quick
     Qt5::Multimedia
     Qt5::Widgets
@@ -231,8 +231,14 @@ target_link_libraries(klibcore_test
     )
 
 
-add_test(NAME KLibCoreTest COMMAND klibcore_test)
+add_test(KLibCoreTests klibcore_tests)
 
+add_custom_command(
+     TARGET klibcore_tests
+     COMMENT "KLibCoreTests"
+     POST_BUILD
+     COMMAND klibcore_tests
+)
 
 execute_process(
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}

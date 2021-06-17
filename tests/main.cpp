@@ -14,26 +14,18 @@
 
 
 int main(int argc, char *argv[]) {
-
-
-    auto vec = __KMeta::classNames();
-    for(auto v : vec) {
-        std::cout << v << "\n";
-    }
-    qmlRegisterType<QObject>("KLib", 1, 0, "Null");
-
-
-
-    QGuiApplication app(argc, argv);
-    QTest::qExec(new KMath_Test, argc, argv);
-    QTest::qExec(new KAdditional_Test, argc, argv);
-    QTest::qExec(new KUniversalQueue_Test, argc, argv);
-    QTest::qExec(new KFlexibleModel_Test, argc, argv);
-    QTest::qExec(new KPull_Test, argc, argv);
-
-    QQuickView view;
-    view.setSource(QUrl("qrc:/klibmain.qml"));
-    view.show();
-
-    return app.exec();
+    int code = 0;
+    code = QTest::qExec(new KMath_Test, argc, argv);
+    if (code != 0)
+        return code;
+    code = QTest::qExec(new KAdditional_Test, argc, argv);
+    if (code != 0)
+        return code;
+    code = QTest::qExec(new KUniversalQueue_Test, argc, argv);
+    if (code != 0)
+        return code;
+    code = QTest::qExec(new KFlexibleModel_Test, argc, argv);
+    if (code != 0)
+        return code;
+    code = QTest::qExec(new KPull_Test, argc, argv);
 }

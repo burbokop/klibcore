@@ -12,6 +12,8 @@ public:
 private slots:
     void constrainPath_test();
 
+    void groupedOn_test();
+
 signals:
 
 };
