@@ -1,0 +1,1 @@
+include(klibcore/klibcore.cmake)
