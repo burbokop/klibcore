@@ -1,1 +1,1 @@
-include(klibcore/klibcore.cmake)
+include(klibcore.cmake)
