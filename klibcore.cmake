@@ -170,13 +170,12 @@ set(HEADERS
 
     )
 
-
 add_library(klibcore SHARED
     ${SOURCES}
     ${HEADERS}
     )
 
-add_compile_definitions(KLIBCORE_USE_LIBRARY)
+target_compile_definitions(klibcore PUBLIC KLIBCORE_USE_LIBRARY)
 
 find_package(Qt5 COMPONENTS
     Core
