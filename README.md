@@ -26,6 +26,20 @@ DEFINES += KLIBCORE_USE_LIBRARY
 include(klibcore/klibcore.cmake)
 ```
 
+## building script example
+
+```
+#!/bin/sh
+
+git clone https://github.com/burbokop/klibcore.git
+cd ./klibcore
+mkdir build
+cd build
+cmake .. \
+	-DCMAKE_PREFIX_PATH=/home/user/Qt/5.15.2/gcc_64/lib/cmake
+make
+```
+
 # additional defines
 
 klib allow using extended meta system.
