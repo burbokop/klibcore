@@ -1,8 +1,8 @@
 #ifndef KTYPE_H
 #define KTYPE_H
 
-
 #include <string>
+#include <typeinfo>
 
 #ifdef QT_CORE_LIB
     #include <QString>
